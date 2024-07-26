@@ -13,12 +13,14 @@ export class CreateTaskComponent {
   CloseForm: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   @Output()
-  EmitTaskData: EventEmitter<any> = new EventEmitter<any>();
+  emitTaskData: EventEmitter<any> = new EventEmitter<any>();
 
   @ViewChild('createTaskForm') form: NgForm
 
   onFormSubmitted() {
-    console.log(this.form)
+    this.emitTaskData.emit(this.form.value);
+    console.log(this.form.value)
+
   }
 
   OnCloseForm(){
