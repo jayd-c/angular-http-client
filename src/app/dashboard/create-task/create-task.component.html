@@ -4,7 +4,9 @@
 		<a class="close" href="#" (click)="OnCloseForm()">&times;</a>
 		<div class="content">
 			<section class="container">
-                <form action="#" class="form" (ngSubmit)="onFormSubmitted()" #createTaskForm="ngForm">
+                <form action="#" class="form" 
+                (ngSubmit)="onFormSubmitted()" 
+                #createTaskForm="ngForm">
                   <div class="input-box">
                     <label>Title*</label>
                     <input type="text" name="title" ngModel  required />
@@ -43,9 +45,12 @@
                           <option value="complete">Complete</option>
                         </select>
                       </div>
+                      <div class="input-box">
+                        <input type="text" name="taskCode" ngModel required hidden>
+                      </div>
                     </div>
                   </div>
-                  <button type="submit">Create Task</button>
+                  <button type="submit" (click)="createTaskCode()">Create Task</button>
                 </form>
               </section>
 		</div>
