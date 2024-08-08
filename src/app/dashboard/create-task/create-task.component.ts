@@ -38,7 +38,8 @@ export class CreateTaskComponent {
     let code1 = this.form.value.title;
     let code2 = this.form.value.createdAt;
     let code3= this.form.value.assignedTo;
-    taskNumber = code1.slice(0,1) + code1.length + code2.slice(2,4) + "_" + code3.slice(0,3);
+    let code4 = Date.now();
+    taskNumber = code1.slice(0,1) + code1.length + code2.slice(2,4) + "_" + code3.slice(0,3) + code4;
 
     this.form.form.patchValue({
       taskCode:taskNumber
