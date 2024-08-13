@@ -4,6 +4,14 @@
         (emitTaskData)="createTask($event)"
 ></app-create-task>
 
+<app-create-my-sql-task
+*ngIf="showMySqlCreateTaskForm"
+(closeMySqlCreateForm)=closeMySqlCreateForm()>
+
+</app-create-my-sql-task>
+
+
+
 <div class="dashboard-container">
     <div style="display: flex;">
         <div style="width: 50%">
@@ -15,7 +23,7 @@
             <button class="create-task-btn">Clear NoSql Tasks</button>
             </div>
         <div style="width: 100%; text-align: left;">
-            <button class="create-task-btn-mySql" (click)="OpenCreateTaskForm()">Create MySql Task</button>
+            <button class="create-task-btn-mySql" (click)="OpenCreateMySqlTaskForm()">Create MySql Task</button>
             <button class="create-task-btn-mySql">Fetch MySql Tasks</button>
             <button class="create-task-btn-mySql">Clear MySql Tasks</button>
         </div>

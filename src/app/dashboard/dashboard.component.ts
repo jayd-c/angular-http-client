@@ -6,16 +6,21 @@ import { CommonModule } from '@angular/common';
 import { Task } from '../Model/task';
 import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs';
+import { CreateMySqlTaskComponent } from './create-my-sql-task/create-my-sql-task.component';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CreateTaskComponent, TaskDetailsComponent, FormsModule,CommonModule, HttpClientModule],
+  imports: [CreateTaskComponent, TaskDetailsComponent, 
+    FormsModule,CommonModule, HttpClientModule,
+    CreateMySqlTaskComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
 export class DashboardComponent implements OnInit{
   showCreateTaskForm: boolean = false;
+  
+  showMySqlCreateTaskForm: boolean = false;
 
   allTasks:Task[] = []
 
@@ -34,6 +39,9 @@ export class DashboardComponent implements OnInit{
     this.showCreateTaskForm = true;
   }
 
+  OpenCreateMySqlTaskForm() {
+    this.showMySqlCreateTaskForm = true;
+  }
   createTask(data: Task) {
     const headers = new HttpHeaders({'my-headers':'hello-world!'})
     this.http.post('https://angularhttpclient-40ce2-default-rtdb.firebaseio.com/tasks.json',data, {headers:headers})
@@ -86,6 +94,9 @@ export class DashboardComponent implements OnInit{
     this.showCreateTaskForm = false;
   }
 
+  closeMySqlCreateForm(){
+    this.showMySqlCreateTaskForm = false;
+  }
   printAllTasks() {
     for(let task of this.allTasks) console.log(task);
     console.log("tasks from method " ,this.allTasks)
