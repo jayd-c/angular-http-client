@@ -7,6 +7,7 @@ import { Task } from '../Model/task';
 import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs';
 import { CreateMySqlTaskComponent } from './create-my-sql-task/create-my-sql-task.component';
+import { MySqlTask } from '../Model/mysqtask';
 
 @Component({
   selector: 'app-dashboard',
@@ -50,6 +51,9 @@ export class DashboardComponent implements OnInit{
     })
   }
 
+  CreateMySqlTask(data:MySqlTask){
+    console.log("from dashbord...", data )
+  }
   private fetchallTasksFromJava () {
     this.http.get("http://localhost:8080/api/tasks")
     .pipe(map((response)=> {

@@ -6,8 +6,8 @@
 
 <app-create-my-sql-task
 *ngIf="showMySqlCreateTaskForm"
-(closeMySqlCreateForm)=closeMySqlCreateForm()>
-
+(closeMySqlCreateForm)="closeMySqlCreateForm()"
+(emitMySqlTaskData)="CreateMySqlTask($event)">
 </app-create-my-sql-task>
 
 
