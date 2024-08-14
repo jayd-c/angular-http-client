@@ -47,11 +47,15 @@ export class DashboardComponent implements OnInit{
     const headers = new HttpHeaders({'my-headers':'hello-world!'})
     this.http.post('https://angularhttpclient-40ce2-default-rtdb.firebaseio.com/tasks.json',data, {headers:headers})
     .subscribe((response)=> {
-      console.log(response)
+      console.log('sql response ',response)
     })
   }
 
   CreateMySqlTask(data:MySqlTask){
+    this.http.post("http://localhost:8080/api",data)
+    .subscribe((response)=> {
+      console.log('post response ',response)
+    })
     console.log("from dashbord...", data )
   }
   private fetchallTasksFromJava () {

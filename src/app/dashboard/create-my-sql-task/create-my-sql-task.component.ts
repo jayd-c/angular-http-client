@@ -23,8 +23,10 @@ export class CreateMySqlTaskComponent {
 
   @Output()
   emitMySqlTaskData: EventEmitter<MySqlTask> = new EventEmitter<MySqlTask>();
+
   onMySqlCreateSubmitted() {
-    this.emitMySqlTaskData.emit(this.form.value)
+    this.emitMySqlTaskData.emit(this.form.value);
+    this.closeMySqlCreateForm.emit(false)
     console.log(this.form.value)
   }
   createTaskCode() {
