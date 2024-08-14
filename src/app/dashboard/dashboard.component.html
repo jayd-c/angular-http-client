@@ -33,13 +33,14 @@
     <hr>
 
     <div class="dashboard-item-container">
-            <div class="task-item">
+        @for(task of allTasks; track task.taskCode ; let index = $index;) {
+            <div class="task-item" [ngClass]="'task-' + task.status">
                 <div class="task-title">
-                    <h3>Task Title</h3>
+                    <h3>{{task.title}}</h3>
                 </div>
-                <p><b>Assigned to: </b>John Smith</p>
-                <p><b>Priority: </b>High</p>
-                <p><b>Status: </b>In Progress</p>
+                <p><b>Assigned to: </b>{{task.assignedTo}}</p>
+                <p><b>Priority: </b>{{task.priority}}</p>
+                <p><b>Status: </b>{{task.status}}</p>
                 <div class="task-action-icons">
                     <button class="task-action-btn" title="Detail">
                         <i class="fa fa-info-circle" aria-hidden="true"></i>
@@ -52,6 +53,7 @@
                     </button>            
                 </div>
             </div>
+        }
     </div>
 </div>
 
