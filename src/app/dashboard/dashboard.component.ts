@@ -30,7 +30,7 @@ export class DashboardComponent implements OnInit{
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
-    this.fetchAllTasks();
+    this.fetchAllTasksFromFireBase();
     this.fetchallTasksFromJava();
     this.printAllTasks();
     
@@ -58,8 +58,9 @@ export class DashboardComponent implements OnInit{
     })
     console.log("from dashbord...", data )
   }
-  private fetchallTasksFromJava () {
-    this.http.get("http://localhost:8080/api/tasks")
+
+  private fetchAllTasks(url:string) {
+    this.http.get<{[key:string]:any}>(url)
     .pipe(map((response)=> {
       let tasks = [];
       //Transform data
@@ -76,26 +77,16 @@ export class DashboardComponent implements OnInit{
     })
   }
 
+  private fetchallTasksFromJava () {
+    this.fetchAllTasks("http://localhost:8080/api/tasks")
+   
+  }
+
   //since nosql databases has key value for storing user data we need to change (transform) it to an array so 
   //we can access the data by it's index number as below.
 
-  private fetchAllTasks () {
-    this.http.get<{[key:string]: Task}>("https://angularhttpclient-40ce2-default-rtdb.firebaseio.com/tasks.json")
-    .pipe(map((response)=> {
-      //Transform data
-      let tasks = [];
-      for(let key in response) {
-        if(response.hasOwnProperty(key)) {
-          this.allTasks.push(response[key])
-          tasks.push({...response[key], id:key})
-        }
-      }
-      return tasks;
-    }))
-    .subscribe((tasks)=> {
-      console.log(tasks)
-    })
-    
+  private fetchAllTasksFromFireBase () {
+    this.fetchAllTasks("https://angularhttpclient-40ce2-default-rtdb.firebaseio.com/tasks.json")
   }
 
   CloseCreateTaskForm(){

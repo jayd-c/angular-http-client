@@ -36,7 +36,7 @@
         @for(task of allTasks; track task.taskCode ; let index = $index;) {
             <div class="task-item" [ngClass]="'task-' + task.status">
                 <div class="task-title">
-                    <h3>{{task.title}}</h3>
+                    <h3>{{task.title}}({{index+1}})</h3>
                 </div>
                 <p><b>Assigned to: </b>{{task.assignedTo}}</p>
                 <p><b>Priority: </b>{{task.priority}}</p>
@@ -52,6 +52,10 @@
                         <i class="fa fa-trash" aria-hidden="true"></i>
                     </button>            
                 </div>
+            </div>
+        } @empty{
+            <div class="task-item">
+                <h2>No tasks at the moment</h2>
             </div>
         }
     </div>
