@@ -22,8 +22,11 @@ export class DashboardComponent implements OnInit{
   showCreateTaskForm: boolean = false;
   
   showMySqlCreateTaskForm: boolean = false;
+  noSqlTasks:Task[] = [];
+  mySqlTasks:Task[] = [];
 
-  allTasks:Task[] = []
+
+
 
   constructor(private http: HttpClient) {}
   
@@ -32,7 +35,6 @@ export class DashboardComponent implements OnInit{
     //Add 'implements OnInit' to the class.
     this.fetchAllTasksFromFireBase();
     this.fetchallTasksFromJava();
-    this.printAllTasks();
     
   }
 
@@ -51,6 +53,7 @@ export class DashboardComponent implements OnInit{
     })
   }
 
+
   CreateMySqlTask(data:MySqlTask){
     this.http.post("http://localhost:8080/api",data)
     .subscribe((response)=> {
@@ -59,26 +62,29 @@ export class DashboardComponent implements OnInit{
     console.log("from dashbord...", data )
   }
 
-  private fetchAllTasks(url:string) {
-    this.http.get<{[key:string]:any}>(url)
+  fetchAllTasksClicked(){
+    this.fetchAllTasksFromFireBase();
+    this.fetchallTasksFromJava();
+  }
+
+
+
+  private fetchallTasksFromJava () {
+    this.http.get<{[key:string]:any}>("http://localhost:8080/api/tasks")
     .pipe(map((response)=> {
       let tasks = [];
       //Transform data
       for(let key in response) {
         if(response.hasOwnProperty(key)) {
           tasks.push({...response[key], id:key})
-          this.allTasks.push(response[key])
         }
       }
       return tasks;
     }))
     .subscribe((tasks)=> {
-      console.log(tasks)
-    })
-  }
-
-  private fetchallTasksFromJava () {
-    this.fetchAllTasks("http://localhost:8080/api/tasks")
+      this.mySqlTasks = tasks;
+      // console.log(tasks)
+    }) 
    
   }
 
@@ -86,8 +92,24 @@ export class DashboardComponent implements OnInit{
   //we can access the data by it's index number as below.
 
   private fetchAllTasksFromFireBase () {
-    this.fetchAllTasks("https://angularhttpclient-40ce2-default-rtdb.firebaseio.com/tasks.json")
+      this.http.get<{[key:string]:any}>("https://angularhttpclient-40ce2-default-rtdb.firebaseio.com/tasks.json")
+      .pipe(map((response)=> {
+        let tasks = [];
+        //Transform data
+        for(let key in response) {
+          if(response.hasOwnProperty(key)) {
+            tasks.push({...response[key], id:key})
+          }
+        }
+        return tasks;
+      }))
+      .subscribe((tasks)=> {
+        this.noSqlTasks = tasks;
+        // console.log(tasks)
+      }) 
   }
+
+
 
   CloseCreateTaskForm(){
     this.showCreateTaskForm = false;
@@ -96,8 +118,5 @@ export class DashboardComponent implements OnInit{
   closeMySqlCreateForm(){
     this.showMySqlCreateTaskForm = false;
   }
-  printAllTasks() {
-    for(let task of this.allTasks) console.log(task);
-    console.log("tasks from method " ,this.allTasks)
-  }
+
 }

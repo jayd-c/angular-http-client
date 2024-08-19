@@ -19,12 +19,15 @@
         </div>
         <div style="width: 100%; text-align: right;">
             <button class="create-task-btn" (click)="OpenCreateTaskForm()">Create NoSql Task</button>
-            <button class="create-task-btn">Fetch NoSql Tasks</button>
             <button class="create-task-btn">Clear NoSql Tasks</button>
             </div>
+        <div style="width: 100%; text-align: center;">
+            <button 
+            class="create-task-btn-fetchAll"
+            (click)="fetchAllTasksClicked()">Fetch All Tasks</button>
+        </div>
         <div style="width: 100%; text-align: left;">
             <button class="create-task-btn-mySql" (click)="OpenCreateMySqlTaskForm()">Create MySql Task</button>
-            <button class="create-task-btn-mySql">Fetch MySql Tasks</button>
             <button class="create-task-btn-mySql">Clear MySql Tasks</button>
         </div>
         
@@ -33,10 +36,10 @@
     <hr>
 
     <div class="dashboard-item-container">
-        @for(task of allTasks; track task.taskCode ; let index = $index;) {
+        @for(task of noSqlTasks; track task.taskCode ; let index = $index;) {
             <div class="task-item" [ngClass]="'task-' + task.status">
                 <div class="task-title">
-                    <h3>{{task.title}}({{index+1}})</h3>
+                    <h3>{{task.title}}({{index+1}})-<span style="color: green;">NoSql</span></h3>
                 </div>
                 <p><b>Assigned to: </b>{{task.assignedTo}}</p>
                 <p><b>Priority: </b>{{task.priority}}</p>
@@ -55,7 +58,33 @@
             </div>
         } @empty{
             <div class="task-item">
-                <h2>No tasks at the moment</h2>
+                <h2>No tasks from <span style="color: rebeccapurple;">FireBase</span> at the moment</h2>
+            </div>
+        }
+
+        @for(task of mySqlTasks; track task.taskCode ; let index = $index;) {
+            <div class="task-item" [ngClass]="'task-' + task.status">
+                <div class="task-title">
+                    <h3>{{task.title}}({{index+1}})<span style="color: red;">MySql</span></h3> 
+                </div>
+                <p><b>Assigned to: </b>{{task.assignedTo}}</p>
+                <p><b>Priority: </b>{{task.priority}}</p>
+                <p><b>Status: </b>{{task.status}}</p>
+                <div class="task-action-icons">
+                    <button class="task-action-btn" title="Detail">
+                        <i class="fa fa-info-circle" aria-hidden="true"></i>
+                    </button>
+                    <button class="task-action-btn" title="Edit">
+                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                    </button>
+                    <button class="task-action-btn" title="Delete">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                    </button>            
+                </div>
+            </div>
+        } @empty{
+            <div class="task-item">
+                <h2>No tasks from <span style="color:lawngreen">MySql</span> at the moment</h2>
             </div>
         }
     </div>

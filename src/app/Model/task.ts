@@ -6,7 +6,8 @@ export class Task {
         public desc:string,
         public priority:string,
         public status:string,
-        public title:string
+        public title:string,
+        public id?:string
     ) {
 
     }
