@@ -109,7 +109,13 @@ export class DashboardComponent implements OnInit{
       }) 
   }
 
+  deleteTask(id?:string) {
+    this.http.delete("https://angularhttpclient-40ce2-default-rtdb.firebaseio.com/tasks/" +id+".json")
+    .subscribe((response)=>{
+      console.log('response from delete request ' ,response)
+    })
 
+  }
 
   CloseCreateTaskForm(){
     this.showCreateTaskForm = false;

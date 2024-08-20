@@ -34,7 +34,7 @@
     </div>
 
     <hr>
-
+    <!-- for nosql tasks -->
     <div class="dashboard-item-container">
         @for(task of noSqlTasks; track task.taskCode ; let index = $index;) {
             <div class="task-item" [ngClass]="'task-' + task.status">
@@ -51,7 +51,7 @@
                     <button class="task-action-btn" title="Edit">
                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                     </button>
-                    <button class="task-action-btn" title="Delete">
+                    <button class="task-action-btn" title="Delete" (click)="deleteTask(task.id)">
                         <i class="fa fa-trash" aria-hidden="true"></i>
                     </button>            
                 </div>
@@ -61,6 +61,8 @@
                 <h2>No tasks from <span style="color: rebeccapurple;">FireBase</span> at the moment</h2>
             </div>
         }
+
+        <!-- for mysql tasks -->
 
         @for(task of mySqlTasks; track task.taskCode ; let index = $index;) {
             <div class="task-item" [ngClass]="'task-' + task.status">
